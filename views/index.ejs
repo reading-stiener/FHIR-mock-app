@@ -1,0 +1,57 @@
+<%- include ('partials/header.ejs') %>
+    <div class="table-wrapper">
+        <table class="table table-hovered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">BirthDate</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Identifier</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Position</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% athletes.forEach((athlete,index)  => { %>
+                    <tr>
+                        <th scope="row">
+                            <%= athlete.Id %>
+                        </th>
+                        <td>
+                            <%= athlete.Given %>
+                        </td>
+                        <td>
+                            <%= athlete.Family %>
+                        </td>
+                        <td>
+                            <%= athlete.birthDate %>
+                        </td>
+                        <td>
+                            <%= athlete.Gender %>
+                        </td>
+                        <td>
+                            <%= athlete.Identifier %>
+                        </td>
+                        <td>
+                            <%= athlete.Team %>
+                        </td>
+                        <td>
+                            <%= athlete.Position %>
+                        </td>
+                        <td>
+                            <a href="/edit/<%= athlete.Id %>" target="_blank" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+                            <a href="/delete/<%= athlete.Id %>" class="btn btn-sm btn-danger">Delete</a>
+                            <a href="/health/<%= athlete.Id %>" class="btn btn-sm btn-info">FHIR!</a>
+                            <a href="/reconciliation/<%= athlete.Id %>" class="btn btn-sm btn-info">Compare</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+    </div>
+    </div>
+    </body>
+
+    </html>

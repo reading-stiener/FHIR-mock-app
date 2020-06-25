@@ -1,0 +1,43 @@
+<h6>Patient's Allergies</h6>
+
+<div class="table-wrapper">
+    <table class="table table-hovered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Status</th>
+                <th scope="col">Type</th>
+                <th scope="col">Category</th>
+                <th scope="col">Criticality</th>
+                <th scope="col">Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% allergies.forEach((Allergy,index)  => {
+                
+                %>
+                <tr>
+                    <td>
+
+
+                        <%= Allergy.clinicalStatus.coding[0].code+ "/"+
+                            Allergy.verificationStatus.coding[0].code
+                        %>
+                    </td>
+                    <td>
+                        <%= Allergy.type %>
+                    </td>
+                    <td>
+                        <%=  Allergy.category[0] %>
+                    </td>
+                    <td>
+                        <%=  Allergy.criticality %>
+                    </td>
+                    <td>
+                        <%= Allergy.code.coding[0].code+" : "+Allergy.code.coding[0].display %>
+                    </td>
+
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</div>

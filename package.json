@@ -1,0 +1,21 @@
+{
+  "name": "mysportteam",
+  "version": "1.0.0",
+  "description": "Sport Team Management With FHIR",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "FHIR Intermediate Course Team",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.2",
+    "ejs-lint": "^1.0.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "fhir-kit-client": "^1.4.2",
+    "req-flash": "0.0.3",
+    "sqlite3": "^4.1.1"
+  }
+}

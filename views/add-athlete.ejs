@@ -1,0 +1,38 @@
+<%- include('./partials/header.ejs') %>
+    <div class="container">
+        <% if (message != '') { %>
+            <p class="text-center text-danger">
+                <%= message %>
+            </p>
+            <% } %>
+                <form class="add-athlete-form" action="" method="post" enctype="json">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" name="Given" id="Given" placeholder="First Name" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" name="Family" id="Family" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" name="birthDate" id="birthDate" placeholder="mm/dd/yyyy" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" name="Gender" id="Gender" placeholder="gender" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" name="Identifier" id="Identifier" placeholder="identifier" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" name="Team" id="Team" placeholder="team" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" name="Position" id="Position" placeholder="position" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Add athlete</button>
+                </form>
+    </div>
+    </div>
+    </body>
+
+    </html>

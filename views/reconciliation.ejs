@@ -1,0 +1,117 @@
+<%- include ('./partials/header.ejs') %>
+    <div class ="table-wrapper">
+        <table class="table table-hovered"> 
+            <thread class="thread-dark">
+                <tr>
+                    <th scope="col">DataType</th>
+                    <th scope="col">Database</th>
+                    <th scope="col">FHIR</th>
+                </tr> 
+            </thread>
+            <tbody>
+                <% if (databaseRec.Family == fhirRec.name[0].family) { %> 
+                    <tr class ="table-success"> 
+                        <th scope ="row"> 
+                            Family Name
+                        </th>
+                        <td>
+                            <%= databaseRec.Family%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.name[0].family%>
+                        </td> 
+                    </tr>
+                <%} else { %> 
+                    <tr class ="table-danger"> 
+                        <th scope ="row"> 
+                            Family Name
+                        </th>
+                        <td>
+                            <%= databaseRec.Family%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.name[0].family%>
+                        </td> 
+                    </tr>
+                <% } %>
+                <% if (databaseRec.Given == fhirRec.name[0].given) { %> 
+                    <tr class ="table-success"> 
+                        <th scope ="row"> 
+                            Given Name
+                        </th>
+                        <td>
+                            <%= databaseRec.Given%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.name[0].given%>
+                        </td> 
+                    </tr>
+                <%} else { %> 
+                    <tr class ="table-danger"> 
+                        <th scope ="row"> 
+                            Given Name
+                        </th>
+                        <td>
+                            <%= databaseRec.Given%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.name[0].given%>
+                        </td> 
+                    </tr>
+                <% } %>
+                <% if (databaseRec.Gender == fhirRec.name[0].Gender) { %> 
+                    <tr class ="table-success"> 
+                        <th scope ="row"> 
+                            Gender
+                        </th>
+                        <td>
+                            <%= databaseRec.Gender%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.gender%>
+                        </td> 
+                    </tr>
+                <%} else { %> 
+                    <tr class ="table-danger"> 
+                        <th scope ="row"> 
+                            Gender
+                        </th>
+                        <td>
+                            <%= databaseRec.Gender%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.name[0].gender%>
+                        </td> 
+                    </tr>
+                <% } %>
+                <% if (databaseRec.birthDate == fhirRec.name[0].birthDate) { %> 
+                    <tr class ="table-success"> 
+                        <th scope ="row"> 
+                            Birth date
+                        </th>
+                        <td>
+                            <%= databaseRec.birthDate%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.birthDate%>
+                        </td> 
+                    </tr>
+                <%} else { %> 
+                    <tr class ="table-danger"> 
+                        <th scope ="row"> 
+                            Birth date
+                        </th>
+                        <td>
+                            <%= databaseRec.birthDate%> 
+                        </td>
+                        <td>
+                            <%= fhirRec.birthDate%>
+                        </td> 
+                    </tr>
+                <% } %>
+
+            </tbody> 
+        </table>
+    </div>
+</body> 
+</html>
