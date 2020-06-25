@@ -73,11 +73,33 @@
                                                 <%    phones = phones + ', ' + patient.telecom[i].value } %> 
                                             <% } %>
                                           <% }  %>
-                                <p><%=phones%></p>     
+                                    <%=phones%>    
                                 
                                 </label>
                             </div>
                         </div>
+                        <div class="row">
+                            <Label> Practitioner in the city </Label>
+                            <% for (var i = 0; i < practitioners.length ; i++) { %>
+                               <div class="col-md-4">
+                               <label for="family">Name:</label>
+                                    <label style="font-weight:bold"><%= practitioners[i].name[0].given[0]%> + " " + <%=practitioners[i].name[0].family%></label>
+                               </div>
+                            <% } %>
+            
+                        </div>
+                        <div class="row">
+                            <Label> Organizations in the city </Label>
+                            <% for (var i = 0; i < organizations.length ; i++) { %>
+                               <div class="col-md-4">
+                               <label for="family">Name:</label>
+                                    <label style="font-weight:bold"><%= organizations[i].name%></label>
+                               </div>
+                            <% } %>
+                    
+                        </div>
+           
+
                         <div class="row">
                             <div class="col-md-4">
 

@@ -17,42 +17,38 @@ module.exports = {
 
             var ourIdentifier = result[0].Identifier;
 
-            fhirAthlete.GetPatientInfo(ourIdentifier).then(
-                //If successful, we search for the clinical info, and then render everything
-
-
-                PatientInfo => {
-                    condition = [];
-                    allergy = [];
-                    medication = [];
-
-                    var ServerAssignedId = PatientInfo.id;
-
-                    fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId).
-                    then(
-
-                            fhir_conditions => {
-                                condition = fhir_conditions;
-
-
-                                fhirAthlete.GetClinicalInfo('AllergyIntolerance', ServerAssignedId).
-                                then(
-                                    fhir_allergies => {
-                                        allergy = fhir_allergies;
-                                        res.render('athlete-health.ejs', {
-                                            title: 'Athlete Health',
-                                            athlete: result[0],
-                                            patient: PatientInfo,
-                                            conditions: condition,
-                                            allergies: allergy,
-                                            message: ''
-                                        });
-                                    });
-                                //fhirAthlete.GetClinicalInfo('MedicationRequest', ServerAssignedId).then(fhir_meds => medication = fhir_meds);
-
-                            })
-                        .catch(e => { return res.status(500).send(e) });
-                });
+            // used async ... await instead of promise chaining
+            try {
+                (async () => { 
+                    
+                    var patientInfo = await fhirAthlete.GetPatientInfo(ourIdentifier);
+                    var patientCity =  patientInfo.address[0].city;
+                    var ServerAssignedId = patientInfo.id;
+                    var condition = await fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId);
+                    var allergy = await fhirAthlete.GetClinicalInfo('AllergyIntolerance', ServerAssignedId);
+        
+                    // lookup organization in patient's city
+                    var organizationList = await fhirAthlete.GetProviderInfo('Organization', patientCity);
+                    var practitionerList = await fhirAthlete.GetProviderInfo('Practitioner', patientCity);
+                    console.log(practitionerList)
+                    res.render('athlete-health.ejs', {
+                        title: 'Athlete Health',
+                        athlete: result[0],
+                        patient: patientInfo,
+                        conditions: condition,
+                        allergies: allergy,
+                        organizations: organizationList,
+                        practitioners: practitionerList,
+                        message: ''
+                    });
+                })()
+                .catch(err => {return res.status(500).send(err)})
+                
+            } 
+            catch (error) { 
+                return res.status(500).send(error); 
+            }
+           
         })
     }
 }

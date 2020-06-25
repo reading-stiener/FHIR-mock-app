@@ -30,4 +30,24 @@ async function GetPatientInfo(OurIdentifier) {
     PatientInfo = entries[0].resource;
     return PatientInfo;
 }
-module.exports = { GetPatientInfo, GetClinicalInfo }
+
+async function GetProviderInfo(providerType, locationCity) {
+    const fhirClient = new Client({
+        baseUrl: 'http://fhir.hl7fundamentals.org/r4'
+    });
+
+    var providerList = []; 
+    let searchResponse = await fhirClient
+        .search({ resourceType: providerType, searchParams: { address: locationCity } });
+    
+        if (searchResponse.total > 0) {
+            entries = searchResponse.entry;
+            entries.forEach(entry => {
+                var provider = entry.resource;
+                providerList.push(provider);
+            })
+        }
+        return providerList;
+  
+}
+module.exports = { GetPatientInfo, GetClinicalInfo, GetProviderInfo }
