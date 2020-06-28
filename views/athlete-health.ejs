@@ -46,7 +46,6 @@
                             <div class="col-md-4">
 
                                 <label>Server Assigned Id:</label>
-
                                 <label style="font-weight:bold"><%= patient.id %></label>
                             </div>
                         </div>
@@ -57,56 +56,100 @@
                                 <label style="font-weight:bold"><%= patient.address[0].line[0]+" "+patient.address[0].city+" "+patient.address[0].state+" "+patient.address[0].postalCode %></label>
                             </div>
                         </div>
+                    
+                        <% var phones = '' %> 
+                        <% var emails = '' %>
+                        <% var phoneCheck = false %> 
+                        <% var emailCheck = false %> 
+                        <% if (patient.telecom) { %> 
+                            <% for (var i = 0; i < patient.telecom.length ; i++) { %>
+        
+                                <% if (patient.telecom[i].system == 'email') { %>
+                                    <% if (emailCheck) { %>
+                                        <% emails = emails + ', ' + patient.telecom[i].value %>
+                                    <% } else { %> 
+                                        <% emails = emails + patient.telecom[i].value %>
+                                        <% emailCheck = true %> 
+                                    <% } %> 
+                                        
+                                <% } else if (patient.telecom[i].system == 'phone') { %>
+                                    <% if (phoneCheck) { %>
+                                        <% phones = phones + ', ' + patient.telecom[i].value %>
+                                    <% } else { %> 
+                                        <% phones = phones + patient.telecom[i].value %>
+                                        <% phoneCheck = true %>
+                                    <%} %>
+                                <% } %> 
+                            
+                            <% }  %>
+                        <% } %>       
+                                
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Phone : </label>
+                                <label style="font-weight:bold"><%= phones %></label>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-4">
 
-                                <label>Phone</label>
-                                <label style="font-weight:bold">
-                                    <% var phones = '' %> 
-                                    <% var emails = '' %> 
-                                        <% if (patient.telecom) { %> 
-                                           
-                                            <% for (var i = 0; i < patient.telecom.length ; i++) { %>
-                                                <% if (patient.telecom[i].system == 'email'){ %>
-                                                <%    emails = emails + ', ' + patient.telecom[i].value  %> 
-                                                <% } else if (patient.telecom[i].system == 'phone') { %>
-                                                <%    phones = phones + ', ' + patient.telecom[i].value } %> 
-                                            <% } %>
-                                          <% }  %>
-                                    <%=phones%>    
-                                
-                                </label>
+                                <label>Emails : </label>
+                                <label style="font-weight:bold"><%= emails %></label>
                             </div>
                         </div>
+                    <div> 
+                        <h4>Practitioners in the city</h4> 
+                    
                         <div class="row">
-                            <Label> Practitioner in the city </Label>
                             <% for (var i = 0; i < practitioners.length ; i++) { %>
                                <div class="col-md-4">
                                <label for="family">Name:</label>
-                                    <label style="font-weight:bold"><%= practitioners[i].name[0].given[0]%> + " " + <%=practitioners[i].name[0].family%></label>
+                                    <label style="font-weight:bold"><%= practitioners[i].name[0].given[0]%>  <%=practitioners[i].name[0].family%></label>
                                </div>
+                               <div class="col-md-4">
+                                <label for="family">Address:</label>
+                                     <label style="font-weight:bold"><%= practitioners[i].address[0].city%> </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="family">Contact:</label>
+                                        <% if (practitioners[i].telecom ) { %> 
+                                            <label style="font-weight:bold"> <%= practitioners[i].telecom[0].system %> : <%= practitioners[i].telecom[0].value %></label>
+                                        <%} else { %> 
+                                            <label style="font-weight:bold"> Not available </label>
+                                        <% } %> 
+                                         
+                                </div>
                             <% } %>
             
                         </div>
+                    </div>
+                    <div> 
+                        <h4>Organizations in the city</h4> 
                         <div class="row">
-                            <Label> Organizations in the city </Label>
                             <% for (var i = 0; i < organizations.length ; i++) { %>
                                <div class="col-md-4">
                                <label for="family">Name:</label>
                                     <label style="font-weight:bold"><%= organizations[i].name%></label>
                                </div>
+                               <div class="col-md-4">
+                                <label for="family">Address:</label>
+                                     <label style="font-weight:bold"><%= organizations[i].address[0].city%> </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="family">Contact:</label>
+                                        <% if (practitioners[i].telecom ) { %> 
+                                            <label style="font-weight:bold"> <%= organizations[i].telecom[0].system %> : <%= organizations[i].telecom[0].value %></label>
+                                        <%} else { %> 
+                                            <label style="font-weight:bold"> Not available </label>
+                                        <% } %> 
+                                         
+                                </div>
                             <% } %>
                     
                         </div>
-           
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
-
-                                <label>Emails</label>
-                                <label style="font-weight:bold"><%= emails %></label>
-                            </div>
-                        </div>
                         <%- include ('./partials/health_conditions.ejs') %>
                             <%- include ('./partials/health_allergies.ejs') %>
 

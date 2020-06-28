@@ -44,7 +44,9 @@ async function GetProviderInfo(providerType, locationCity) {
             entries = searchResponse.entry;
             entries.forEach(entry => {
                 var provider = entry.resource;
-                providerList.push(provider);
+                if (!providerList.includes(provider)){
+                    providerList.push(provider);
+                }
             })
         }
         return providerList;
