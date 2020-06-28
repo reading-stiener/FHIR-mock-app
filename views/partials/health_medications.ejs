@@ -1,0 +1,47 @@
+<!-- Assignment L03-1: Fetch and process clinical data Immunization -->
+
+<h6>Patient's Medications</h6>
+
+
+<div class="table-wrapper">
+  <table class="table table-hovered">
+      <thead class="thead-light">
+          <tr>
+              <th scope="col">Effective</th>
+              <th scope="col">Code</th> 
+              <!-- <th scope="col">Dosage</th> -->
+              <th scope="col">Status</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% medications.forEach((medication,index)  => {
+              
+            %>
+              <tr>
+                  <td>                     
+                       <%= medication.authoredOn  %>
+
+
+                  </td>
+                  <td>
+
+
+                      <%= medication.medicationCodeableConcept.coding[0].code+ " : " +medication.medicationCodeableConcept.coding[0].display %>
+                  </td>
+                  <!-- <td>
+
+
+                    <%= medication.dosageInstruction.text %>
+                </td> -->
+                  
+                  <td>
+
+                    <%= medication.status %>
+
+                  </td>
+
+              </tr>
+              <% }) %>
+      </tbody>
+  </table>
+</div>
