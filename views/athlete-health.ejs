@@ -42,6 +42,22 @@
                     <hr/>
                     <div>
                         <h4> Data from the FHIR Server</h4>
+
+                       
+                        <label>Race: </label>
+
+                        <% if (race) { %> 
+                            <% for (var i = 0; i < race.length; i++) { %>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="font-weight:bold">Code: <%= race[i].code %></label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label style="font-weight:bold">Race: <%= race[i].description %></label>
+                                    </div>
+                            </div>
+                            <% } %>
+                        <% } %>
                         <div class="row">
                             <div class="col-md-4">
 
@@ -57,32 +73,7 @@
                             </div>
                         </div>
                     
-                        <% var phones = '' %> 
-                        <% var emails = '' %>
-                        <% var phoneCheck = false %> 
-                        <% var emailCheck = false %> 
-                        <% if (patient.telecom) { %> 
-                            <% for (var i = 0; i < patient.telecom.length ; i++) { %>
-        
-                                <% if (patient.telecom[i].system == 'email') { %>
-                                    <% if (emailCheck) { %>
-                                        <% emails = emails + ', ' + patient.telecom[i].value %>
-                                    <% } else { %> 
-                                        <% emails = emails + patient.telecom[i].value %>
-                                        <% emailCheck = true %> 
-                                    <% } %> 
-                                        
-                                <% } else if (patient.telecom[i].system == 'phone') { %>
-                                    <% if (phoneCheck) { %>
-                                        <% phones = phones + ', ' + patient.telecom[i].value %>
-                                    <% } else { %> 
-                                        <% phones = phones + patient.telecom[i].value %>
-                                        <% phoneCheck = true %>
-                                    <%} %>
-                                <% } %> 
-                            
-                            <% }  %>
-                        <% } %>       
+              
                                 
                         <div class="row">
                             <div class="col-md-4">

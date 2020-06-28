@@ -1,9 +1,71 @@
 const fhirAthlete = require('./athlete_fhir');
 
+
+function findRace(patientInfo){ 
+    if (patientInfo.extension) { 
+        var raceUrl = 'http://hl7.org/fhir/us/core-r4/StructureDefinition/us-core-race';
+        var raceExt; 
+        for (var i = 0; i < patientInfo.extension.length; i++) {
+            if (patientInfo.extension[i].url == raceUrl) {
+                raceExt = patientInfo.extension[i].extension;
+            }
+        }
+        raceList = [];
+        if (raceExt) { 
+            for (var i = 0; i< raceExt.length; i++) {
+                if (raceExt[i].url == 'ombCategory') { 
+                    var race =  { 
+                        code : raceExt[i].valueCoding.code,
+                        description : raceExt[i].valueCoding.display
+                    }
+                    if (!raceList.includes(race)) { 
+                        raceList.push(race);
+                    }
+                } 
+            }
+        }
+
+        return raceList
+    }
+}
+
+function findContact (patient) { 
+    var phones = ''  
+    var emails = '' 
+    var phoneCheck = false  
+    var emailCheck = false  
+    if (patient.telecom) {  
+        for (var i = 0; i < patient.telecom.length ; i++) { 
+   
+            if (patient.telecom[i].system == 'email') { 
+                if (emailCheck) { 
+                    emails = emails + ', ' + patient.telecom[i].value 
+                } else {  
+                    emails = emails + patient.telecom[i].value 
+                    emailCheck = true  
+                }  
+                   
+            } else if (patient.telecom[i].system == 'phone') { 
+                if (phoneCheck) { 
+                    phones = phones + ', ' + patient.telecom[i].value 
+                } else {  
+                    phones = phones + patient.telecom[i].value 
+                    phoneCheck = true 
+               } 
+            }  
+       
+        }  
+    }
+    return { 
+        phoneList : phones,
+        emailList : emails
+    }   
+}
+
+
 module.exports = {
 
     viewAthleteHealthPage: (req, res) => {
-        console.log(req)
         let athleteId = req.params.id;
 
         let query = "SELECT * FROM `athlete` WHERE id = '" + athleteId + "' ";
@@ -22,6 +84,10 @@ module.exports = {
                 (async () => { 
                     
                     var patientInfo = await fhirAthlete.GetPatientInfo(ourIdentifier);
+                    console.log(patientInfo.id);
+                    var patientContact = findContact(patientInfo);
+                    var raceList = findRace(patientInfo);
+
                     var patientCity =  patientInfo.address[0].city;
                     var ServerAssignedId = patientInfo.id;
                     var condition = await fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId);
@@ -39,10 +105,17 @@ module.exports = {
                         allergies: allergy,
                         organizations: organizationList,
                         practitioners: practitionerList,
+                        race : raceList,
+                        phones : patientContact.phoneList,
+                        emails : patientContact.emailList,
                         message: ''
                     });
                 })()
-                .catch(err => {return res.status(500).send(err)})
+                .catch(err => {
+                    console.log("there is an error");
+                    console.log(err);
+                    return res.status(500).send(err)
+                })
                 
             } 
             catch (error) { 
