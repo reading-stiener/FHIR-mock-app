@@ -1,4 +1,5 @@
 const fhirAthlete = require('./athlete_fhir');
+const fhirTerminology = require('../terminology');
 
 
 function findRace(patientInfo){ 
@@ -82,7 +83,11 @@ module.exports = {
             // used async ... await instead of promise chaining
             try {
                 (async () => { 
-                    
+                    var snomedRelationships = await fhirTerminology.GetRelationships('73211009');
+                    // console.log(snomedRelationships);
+                    // let testCode = snomedRelationships && snomedRelationships;
+                    // var result = await fhirTerminology.GetConcept(testCode);
+                    // console.log(testCode);
                     var patientInfo = await fhirAthlete.GetPatientInfo(ourIdentifier);
                     var patientContact = findContact(patientInfo);
                     var raceList = findRace(patientInfo);
