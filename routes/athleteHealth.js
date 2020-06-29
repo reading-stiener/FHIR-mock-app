@@ -92,17 +92,20 @@ module.exports = {
                     var ServerAssignedId = patientInfo.id;
                     var condition = await fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId);
                     var allergy = await fhirAthlete.GetClinicalInfo('AllergyIntolerance', ServerAssignedId);
-        
+                    var immunization = await fhirAthlete.GetClinicalInfo('Immunization', ServerAssignedId);
+
+                    console.log(immunization);
+
                     // lookup organization in patient's city
                     var organizationList = await fhirAthlete.GetProviderInfo('Organization', patientCity);
                     var practitionerList = await fhirAthlete.GetProviderInfo('Practitioner', patientCity);
-                    console.log(practitionerList)
                     res.render('athlete-health.ejs', {
                         title: 'Athlete Health',
                         athlete: result[0],
                         patient: patientInfo,
                         conditions: condition,
                         allergies: allergy,
+                        immunizations: immunization, 
                         organizations: organizationList,
                         practitioners: practitionerList,
                         race : raceList,

@@ -1,0 +1,47 @@
+<h6>Patient's Immunization</h6>
+
+<div class="table-wrapper">
+    <table class="table table-hovered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Status</th>
+                <th scope="col">Vaccine Code</th>
+                <th scope="col">Patient reference</th>
+                <th scope="col">Occurrence</th>
+                <th scope="col">Primary Source</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% immunizations.forEach((immunization,index)  => {
+                
+                %>
+                <tr>
+                    <td>
+                        <%= immunization.status %>
+                    </td>
+                    <td>
+                        <%= immunization.vaccineCode.coding[0].code %> : <%=immunization.vaccineCode.coding[0].display %>
+                    </td>
+
+                    <td>
+                        <%= immunization.patient.reference %>
+                    </td>
+
+                    <td>
+                        <% if (immunization.occurrenceDateTime) { %> 
+                            <%= immunization.occurrenceDateTime %>
+                        <% } else { %>
+                            <%= immunization.occurenceString %>
+                        <% } %> 
+                    </td>
+                    
+                    <td>
+                        <%= immunization.primarySource %>
+                    </td> 
+        
+              
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</div>
