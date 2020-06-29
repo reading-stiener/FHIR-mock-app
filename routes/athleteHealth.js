@@ -84,20 +84,29 @@ module.exports = {
                 (async () => { 
                     
                     var patientInfo = await fhirAthlete.GetPatientInfo(ourIdentifier);
-                    console.log(patientInfo.id);
                     var patientContact = findContact(patientInfo);
                     var raceList = findRace(patientInfo);
-
                     var patientCity =  patientInfo.address[0].city;
                     var ServerAssignedId = patientInfo.id;
+
+                    // this one liner optimizes patient record pull with the $everything extended operation
+                    var patientData = await fhirAthlete.GetClinicalInfoOptimized(ServerAssignedId);
+                    
+                    /*
                     var condition = await fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId);
                     var allergy = await fhirAthlete.GetClinicalInfo('AllergyIntolerance', ServerAssignedId);
                     
                     // get immunization & medications for L03-1
                     var immunizationList = await fhirAthlete.GetClinicalInfo('Immunization', ServerAssignedId);
                     var medicationList = await fhirAthlete.GetClinicalInfo('MedicationRequest', ServerAssignedId);
-                   
+                    */
                     // lookup organization in patient's city
+
+                    var allergy = patientData.AllergyIntolerance;
+                    var condition = patientData.Condition;
+                    var immunizationList = patientData.Immunization;
+                    var medicationList = patientData.MedicationRequest;
+
                     var organizationList = await fhirAthlete.GetProviderInfo('Organization', patientCity);
                     var practitionerList = await fhirAthlete.GetProviderInfo('Practitioner', patientCity);
                     // console.log(practitionerList)
@@ -107,8 +116,7 @@ module.exports = {
                         athlete: result[0],
                         patient: patientInfo,
                         conditions: condition,
-                        allergies: allergy,
-                        immunizations: immunization, 
+                        allergies: allergy, 
                         organizations: organizationList,
                         practitioners: practitionerList,
                         immunizations: immunizationList,

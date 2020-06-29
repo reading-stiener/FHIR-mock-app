@@ -1,4 +1,40 @@
-const Client = require('fhir-kit-client')
+const Client = require('fhir-kit-client');
+const axios = require('axios');
+
+// function optimizes patient data pull in one request
+async function GetClinicalInfoOptimized(patientId){ 
+    var urlFHIREndpoint='http://fhir.hl7fundamentals.org/r4/';
+    var ResourceClass  ='Patient';
+    var ResourceId = patientId;
+    var Operation  = '$everything';
+    var fullUrl = urlFHIREndpoint+ResourceClass+"/"+ResourceId+"/"+Operation; 
+    
+    var patientData = { 
+        AllergyIntolerance : [],
+        Condition : [],
+        Immunization : [],
+        MedicationRequest : []
+    }
+    try { 
+        var response = await axios.get(fullUrl);
+        var responseData = response.data;
+        if (responseData.total > 0) { 
+            entries = responseData.entry;
+            entries.forEach(entry => {
+                var resourceType = entry.resource.resourceType;
+                if (patientData.hasOwnProperty(resourceType)) { 
+                    patientData[resourceType].push(entry.resource);
+                }
+            })
+
+        }
+        return patientData;
+    }
+    catch (error){ 
+        return error;
+    }
+
+}
 
 async function GetClinicalInfo(ResourceType, LogicalServerId) {
     const fhirClient = new Client({
@@ -52,4 +88,4 @@ async function GetProviderInfo(providerType, locationCity) {
         return providerList;
   
 }
-module.exports = { GetPatientInfo, GetClinicalInfo, GetProviderInfo }
+module.exports = { GetPatientInfo, GetClinicalInfo, GetProviderInfo, GetClinicalInfoOptimized }
