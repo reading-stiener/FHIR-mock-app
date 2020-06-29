@@ -137,13 +137,16 @@
                                          
                                 </div>
                             <% } %>
-                    
                         </div>
                     </div>
 
                         <%- include ('./partials/health_conditions.ejs') %>
                         <%- include ('./partials/health_allergies.ejs') %>
+
+                        <!-- Assignment L03-1: Fetch and process clinical data– Immuniza- tionFetch  -->
                         <%- include ('./partials/health_immunizations.ejs') %>
+                        <%- include ('./partials/health_medications.ejs') %>
+
                     </div>
                     <% } else { %>
                         <p class="text-center">athlete Not Found. Go <a href="/add">here</a> to add athletes.</p>

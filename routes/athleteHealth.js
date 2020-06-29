@@ -92,13 +92,16 @@ module.exports = {
                     var ServerAssignedId = patientInfo.id;
                     var condition = await fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId);
                     var allergy = await fhirAthlete.GetClinicalInfo('AllergyIntolerance', ServerAssignedId);
-                    var immunization = await fhirAthlete.GetClinicalInfo('Immunization', ServerAssignedId);
-
-                    console.log(immunization);
-
+                    
+                    // get immunization & medications for L03-1
+                    var immunizationList = await fhirAthlete.GetClinicalInfo('Immunization', ServerAssignedId);
+                    var medicationList = await fhirAthlete.GetClinicalInfo('MedicationRequest', ServerAssignedId);
+                   
                     // lookup organization in patient's city
                     var organizationList = await fhirAthlete.GetProviderInfo('Organization', patientCity);
                     var practitionerList = await fhirAthlete.GetProviderInfo('Practitioner', patientCity);
+                    // console.log(practitionerList)
+
                     res.render('athlete-health.ejs', {
                         title: 'Athlete Health',
                         athlete: result[0],
@@ -108,6 +111,8 @@ module.exports = {
                         immunizations: immunization, 
                         organizations: organizationList,
                         practitioners: practitionerList,
+                        immunizations: immunizationList,
+                        medications: medicationList, 
                         race : raceList,
                         phones : patientContact.phoneList,
                         emails : patientContact.emailList,
