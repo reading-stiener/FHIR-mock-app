@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // parse form data client
 app.use(bodyParser.json({ type: '*' }));
 const { getHomePage } = require('./routes/index');
-const { addAthletePage, addAthlete, deleteAthlete, editAthlete, editAthletePage, reconAthlete } = require('./routes/athlete');
+const { addAthletePage, addAthlete, deleteAthlete, editAthlete, editAthletePage, reconAthlete, addLabResults, addLabResultsPage } = require('./routes/athlete');
 const { viewAthleteHealthPage } = require('./routes/athleteHealth');
 const port = 5000;
 
@@ -39,6 +39,8 @@ app.get('/health/:id', viewAthleteHealthPage);
 app.post('/add', addAthlete);
 app.post('/edit/:id', editAthlete);
 app.get('/reconciliation/:id', reconAthlete);
+app.get('/lab', addLabResultsPage);
+app.post('/lab', addLabResults);
 
 // set the app to listen on the port
 app.listen(port, () => {

@@ -1,0 +1,53 @@
+<%- include('./partials/header.ejs') %>
+    <div class="container">
+        <% if (message != '') { %>
+            <p class="text-center text-danger">
+                <%= message %>
+            </p>
+            <% } %>
+                <form class="add-lab-report-form" action="" method="post" enctype="json">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Status">Status: </label>
+                            <input type="text" class="form-control"  name="Status" id="Status" placeholder="status" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Code-display">Lab description: </label>
+                            <input type="text" class="form-control" name="Code-display" id="Code-display" placeholder="code-display" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Code-code">LOINC code:</label>
+                            <input type="text" class="form-control" name="Code-code" id="Code-code" placeholder="LOINC code" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Subject">Patient reference:</label>
+                            <input type="text" class="form-control" name="Subject" id="Subject" placeholder="Patient ref number" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Issued">Issued date:</label>
+                            <input type="datetime" class="form-control" name="Issued" id="Issued" placeholder="YYYY-MM-DDThh:mm:ss.sss+zz:zz " required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="Effective">Effective date or period:</label>
+                            <input type="datetime" class="form-control" label= "Effective date" name="Effective" id="Effective" placeholder="YYYY-MM-DDThh:mm:ss.sss+zz:zz " required>
+                        </div>
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary float-right">Add Lab</button>
+                </form>
+                
+    </div>
+    </div>
+    </body>
+
+    </html>

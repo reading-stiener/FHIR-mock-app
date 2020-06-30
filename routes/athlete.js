@@ -46,6 +46,26 @@ module.exports = {
             };
         });
     },
+    addLabResultsPage : (req, res) => {
+        try { 
+            res.render('add-lab-report.ejs', { 
+                title : "Add a lab report. Fill out the form below", 
+                message: ""
+            })
+        }
+        catch(error){
+            console.log(error);
+        } 
+      
+    },
+    addLabResults : (req,  res) => { 
+        let message = '';
+        let status = req.body.Status;
+        console.log(status); 
+
+        res.redirect('/lab');
+
+    },
 
     editAthletePage: (req, res) => {
 
