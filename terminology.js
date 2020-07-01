@@ -49,7 +49,7 @@ async function GetRelationships(conceptCode) {
         }
       }
     })
-    console.log(relationships)
+    //console.log(relationships)
   
   } catch(error) {
     return error;
@@ -65,7 +65,7 @@ async function GetString(conceptCode) {
   var Parameters="code="+code+"&"+"system="+system;
   var FullURL = urlFHIREndpoint+ResourceClass+"/"+OperationName+"?"+Parameters;
   
-    console.log(conceptCode);
+    //console.log(conceptCode);
   try {
     var response = await axios.get(FullURL, mainConcept=false);
     var responseData = response.data.parameter;
