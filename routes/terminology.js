@@ -2,6 +2,7 @@ const Client = require('fhir-kit-client');
 const axios   = require('axios');
 
 
+
 async function GetRelationships(conceptCode) {
   var urlFHIREndpoint='https://snowstorm-alpha.ihtsdotools.org/fhir/';
   var ResourceClass  ='CodeSystem';
@@ -32,26 +33,27 @@ async function GetRelationships(conceptCode) {
             relationships.synonym.push({code: data.part[1].valueCoding.code, valueString: data.part[2].valueString });
           }
         }
+      })
 
-        if (data.name === 'property') {
-          if (data.part[0].valueString === 'parent') {
+      for (var i=0; i<responseData.length; i++) {
+        if (responseData[i].name === 'property') {
+          if (responseData[i].part[0].valueString === 'parent') {
             async function getString(code) {
               codeString = await GetString(code);
               relationships.parent.push({code: code, valueString: codeString});
-              console.log(relationships.parent)
             }
-            getString(data.part[1].valueCode);
+            await getString(responseData[i].part[1].valueCode);
         
           } 
-          else if (data.part[0].valueString === 'child') {
+          else if (responseData[i].part[0].valueString === 'child') {
             async function getString(code) {
               codeString = await GetString(code);
               relationships.child.push({code: code, valueString: codeString});
             }
-            getString(data.part[1].valueCode);
+            await getString(responseData[i].part[1].valueCode);
           }
         }
-      })
+      }
       return relationships;
     })().then(relationships => console.log(relationships))
   
@@ -102,10 +104,13 @@ module.exports = {
   },
 
   searchTerminology: (async (req,  res) => {
+    var code = req.body.SCTID;
+    console.log(code)
     try { 
-      (async() => {
+      (async () => {
         console.log('getting concept');
-        var snomedRelationships = await fhirTerminology.GetRelationships('233604007');
+        var snomedRelationships = await GetRelationships(code);
+        console.log(snomedRelationships);
                   // console.log(snomedRelationships);
 
                   // let codeString = await fhirTerminology.GetString(snomedRelationships.parent[0]);
@@ -117,7 +122,7 @@ module.exports = {
                   // let testCode = snomedRelationships && snomedRelationships;
                   // var result = await fhirTerminology.GetConcept(testCode);
                   // console.log(testCode);
-      })
+      })();
       res.render('search-terminology.ejs', { 
           title : "Search SNOMED Code", 
           message: ""
