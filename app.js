@@ -11,6 +11,7 @@ const { getHomePage } = require('./routes/index');
 const { addAthletePage, addAthlete, deleteAthlete, editAthlete, 
         editAthletePage, reconAthlete, addLabResults, 
         addLabResultsPage, addImmunizationPage, addImmunizations } = require('./routes/athlete');
+const { searchTerminologyPage, searchTerminology } = require('./routes/terminology');
 const { viewAthleteHealthPage } = require('./routes/athleteHealth');
 const port = 5000;
 
@@ -45,6 +46,8 @@ app.get('/lab', addLabResultsPage);
 app.post('/lab', addLabResults);
 app.get('/imm', addImmunizationPage);
 app.post('/imm', addImmunizations);
+app.get('/terminology', searchTerminologyPage);
+app.post('/terminology', searchTerminology);
 
 // set the app to listen on the port
 app.listen(port, () => {

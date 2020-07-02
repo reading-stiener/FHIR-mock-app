@@ -181,9 +181,6 @@ module.exports = {
       
     },
 
-       // This is the part for L04-02. 
-    // I chose to post a Diagnostic lab report 
-    // using the DiagnosticReport resource.
     addImmunizations : (async (req,  res) => { 
 
         // must have fields

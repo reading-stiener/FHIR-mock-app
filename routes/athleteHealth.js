@@ -1,6 +1,5 @@
 const fhirAthlete = require('./athlete_fhir');
-const fhirTerminology = require('../terminology');
-
+const fhirTerminology = require('./terminology');
 
 function findRace(patientInfo){ 
     if (patientInfo.extension) { 
@@ -83,8 +82,15 @@ module.exports = {
             // used async ... await instead of promise chaining
             try {
                 (async () => { 
-                    var snomedRelationships = await fhirTerminology.GetRelationships('73211009');
+                    // var snomedRelationships = await fhirTerminology.GetRelationships('233604007');
                     // console.log(snomedRelationships);
+
+                    // let codeString = await fhirTerminology.GetString(snomedRelationships.parent[0]);
+                    
+                    // console.log(codeString)
+                    // snomedRelationships.parent.map(parent => {
+                    //     let codeString = await fhirTerminology.GetString(parent);
+                    // })
                     // let testCode = snomedRelationships && snomedRelationships;
                     // var result = await fhirTerminology.GetConcept(testCode);
                     // console.log(testCode);
