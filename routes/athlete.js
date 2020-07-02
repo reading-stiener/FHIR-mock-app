@@ -88,7 +88,7 @@ module.exports = {
     
         try { 
             // reading the patient resource given id
-            response = await fhirClient.read({ 
+            var response = await fhirClient.read({ 
                 resourceType : 'Patient',
                 id : patientRef
             })
@@ -197,7 +197,7 @@ module.exports = {
     
         try { 
             // reading the patient resource given id
-            response = await fhirClient.read({ 
+            var response = await fhirClient.read({ 
                 resourceType : 'Patient',
                 id : patientRef
             })
@@ -226,7 +226,7 @@ module.exports = {
             
             console.log(l)
             // parameters to connect for validation
-            /*
+            
             var urlFHIREndpoint = 'http://fhir.hl7fundamentals.org/r4';
             var ResourceClass = "Immunization";
             var OperationName = "$validate";
@@ -244,7 +244,7 @@ module.exports = {
             )
             var data = response.data;
             console.log(data);
-            */
+            
             // posting data .... 
             data = await fhirClient.create({
                 resourceType : 'Immunization',
