@@ -1,31 +1,31 @@
 const fhirAthlete = require('./athlete_fhir');
 const fhirTerminology = require('./terminology');
 
-function findRace(patientInfo){ 
+function findEthnicity(patientInfo){ 
     if (patientInfo.extension) { 
-        var raceUrl = 'http://hl7.org/fhir/us/core-r4/StructureDefinition/us-core-race';
-        var raceExt; 
+        var ethUrl = 'http://hl7.org/fhir/us/core-r4/StructureDefinition/us-core-ethnicity';
+        var ethExt; 
         for (var i = 0; i < patientInfo.extension.length; i++) {
-            if (patientInfo.extension[i].url == raceUrl) {
-                raceExt = patientInfo.extension[i].extension;
+            if (patientInfo.extension[i].url == ethUrl) {
+                ethExt = patientInfo.extension[i].extension;
             }
         }
-        raceList = [];
-        if (raceExt) { 
-            for (var i = 0; i< raceExt.length; i++) {
-                if (raceExt[i].url == 'ombCategory') { 
-                    var race =  { 
-                        code : raceExt[i].valueCoding.code,
-                        description : raceExt[i].valueCoding.display
+        ethList = [];
+        if (ethExt) { 
+            for (var i = 0; i< ethExt.length; i++) {
+                if (ethExt[i].url == 'ombCategory') { 
+                    var eth =  { 
+                        code : ethExt[i].valueCoding.code,
+                        description : ethExt[i].valueCoding.display
                     }
-                    if (!raceList.includes(race)) { 
-                        raceList.push(race);
+                    if (!ethList.includes(eth)) { 
+                        ethList.push(eth);
                     }
                 } 
             }
         }
 
-        return raceList
+        return ethList
     }
 }
 
@@ -96,13 +96,14 @@ module.exports = {
                     // console.log(testCode);
                     var patientInfo = await fhirAthlete.GetPatientInfo(ourIdentifier);
                     var patientContact = findContact(patientInfo);
-                    var raceList = findRace(patientInfo);
+                    var ethnicityList = findEthnicity(patientInfo);
                     var patientCity =  patientInfo.address[0].city;
                     var ServerAssignedId = patientInfo.id;
 
                     // this one liner optimizes patient record pull with the $everything extended operation
                     var patientData = await fhirAthlete.GetClinicalInfoOptimized(ServerAssignedId);
-                    
+
+                    // uncomment the block below to run the unoptimized version
                     /*
                     var condition = await fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId);
                     var allergy = await fhirAthlete.GetClinicalInfo('AllergyIntolerance', ServerAssignedId);
@@ -132,7 +133,7 @@ module.exports = {
                         practitioners: practitionerList,
                         immunizations: immunizationList,
                         medications: medicationList, 
-                        race : raceList,
+                        race : ethnicityList,
                         phones : patientContact.phoneList,
                         emails : patientContact.emailList,
                         message: ''
