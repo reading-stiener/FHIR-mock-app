@@ -97,39 +97,39 @@ module.exports = {
   GetRelationships, 
   GetString, 
   searchTerminologyPage : (req, res) => {
-    res.render('search-terminology.ejs', { 
-        title : "Search SNOMED Code", 
-        message: ""
-    })
-  },
-
-  searchTerminology: (async (req,  res) => {
     var code = req.body.SCTID;
-    console.log(code)
-    try { 
-      (async () => {
-        console.log('getting concept');
-        var snomedRelationships = await GetRelationships(code);
-        console.log(snomedRelationships);
-                  // console.log(snomedRelationships);
 
-                  // let codeString = await fhirTerminology.GetString(snomedRelationships.parent[0]);
-                  
-                  // console.log(codeString)
-                  // snomedRelationships.parent.map(parent => {
-                  //     let codeString = await fhirTerminology.GetString(parent);
-                  // })
-                  // let testCode = snomedRelationships && snomedRelationships;
-                  // var result = await fhirTerminology.GetConcept(testCode);
-                  // console.log(testCode);
-      })();
+    try {
       res.render('search-terminology.ejs', { 
           title : "Search SNOMED Code", 
           message: ""
       })
+    } catch(error) {
+      console.log(error);
+    }
+
+  },
+
+  searchTerminology: (async (req,res) => {
+    var code = req.body.SCTID;
+
+    try { 
+      (async () => {
+        // var snomedRelationships = await GetRelationships(code);
+        var snomedRelationships = await GetRelationships('43878008');
+        res.render('search-terminology.ejs', { 
+          title : "SNOMED Code result", 
+          snomedRelationships: snomedRelationships,
+          concept: snomedRelationships.fsn,
+          parents: snomedRelationships.parent,
+          children: snomedRelationships.child,
+          synonyms: snomedRelationships.synonym,
+        })      
+        
+      })();
     }
     catch(error){
-        console.log(error);
+      return res.status(500).send(error); 
     }
 
   }),

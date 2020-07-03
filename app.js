@@ -46,10 +46,10 @@ app.get('/lab', addLabResultsPage);
 app.post('/lab', addLabResults);
 app.get('/imm', addImmunizationPage);
 app.post('/imm', addImmunizations);
-app.get('/terminology', searchTerminologyPage);
-app.post('/terminology', searchTerminology);
+app.get('/search', searchTerminologyPage);
+app.get('/search', searchTerminology);
 
 // set the app to listen on the port
 app.listen(port, () => {
-    console.log(`Server running on port: ${port}`);
+    console.log(`Server running on port: ${ port }`);
 });
