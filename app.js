@@ -47,7 +47,7 @@ app.post('/lab', addLabResults);
 app.get('/imm', addImmunizationPage);
 app.post('/imm', addImmunizations);
 app.get('/search', searchTerminologyPage);
-app.get('/search', searchTerminology);
+app.post('/search', searchTerminology);
 
 // set the app to listen on the port
 app.listen(port, () => {

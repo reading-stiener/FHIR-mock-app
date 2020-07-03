@@ -23,7 +23,6 @@ async function GetRelationships(conceptCode) {
     var response = await axios.get(FullURL);
     var responseData = response.data.parameter;
 
-    (async() => {
       responseData.map((data, index) => {
         if (data.name === 'designation') {
           if (data.part[1].valueCoding.display === 'Fully specified name') {
@@ -54,8 +53,7 @@ async function GetRelationships(conceptCode) {
           }
         }
       }
-      return relationships;
-    })().then(relationships => console.log(relationships))
+      return relationships
   
   } catch(error) {
     return error;
@@ -116,9 +114,10 @@ module.exports = {
     try { 
       (async () => {
         // var snomedRelationships = await GetRelationships(code);
-        var snomedRelationships = await GetRelationships('43878008');
+        var snomedRelationships = await GetRelationships(code);
         res.render('search-terminology.ejs', { 
           title : "SNOMED Code result", 
+          message: "Snomed data",
           snomedRelationships: snomedRelationships,
           concept: snomedRelationships.fsn,
           parents: snomedRelationships.parent,

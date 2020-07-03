@@ -13,87 +13,92 @@
                 </div>
                 <button type="submit" class="btn btn-primary float-right">Search</button>
             </form>
-
-            <div class="table-wrapper">
-                <h4> Concept </h4>
-          
-                <table class="table table-hovered">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Code</th>
-                            <th scope="col">String</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-          
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
+            <% if (message) {%> 
+                <div class="table-wrapper">
+                    <h4> Concept </h4>
             
-                    </tbody>
-                </table>
-                <h4> Synonym </h4>
-                <table class="table table-hovered">
-          
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Code</th>
-                            <th scope="col">String</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-          
-                        <tr>
-                            <td>
+                    <table class="table table-hovered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Code</th>
+                                <th scope="col">String</th>
+                            </tr>
+                       
+                        </thead>
+                        <tbody>
             
-                            </td>
-                        </tr>
+                            <tr> 
+                                <th scope="col"><%= concept.code%> </th>
+                                <th scope="col"><%= concept.valueString%> </th>
+                            </tr>
+                
+                        </tbody>
+                    </table>
+                    <h4> Synonym </h4>
+                    <table class="table table-hovered">
             
-                    </tbody>
-                </table>
-                <h4> Parents </h4>
-                <table class="table table-hovered">
-          
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Code</th>
-                            <th scope="col">String</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-          
-                        <tr>
-                            <td>
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Code</th>
+                                <th scope="col">String</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                                <% for (var i =0; i < synonyms.length; i++){ %>
+                                    <tr>
+                                    <td><%=synonyms[i].code%></td>
+                                    <td><%=synonyms[i].valueString%></td> 
+                                </tr>
+                                <% } %>
+                          
+                        </tbody>
+                    </table>
+                    <h4> Parents </h4>
+                    <table class="table table-hovered">
             
-                            </td>
-                        </tr>
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Code</th>
+                                <th scope="col">String</th>
+                            </tr>
+                        </thead>
+                        <tbody>
             
-                    </tbody>
-                </table>
-          
-                <h4> Children </h4>
-                <table class="table table-hovered">
-          
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Code</th>
-                            <th scope="col">String</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-          
-                        <tr>
-                            <td>
+                                <% for (var i =0; i < parents.length; i++){ %>
+                                    <tr>
+                                    <td><%=parents[i].code%></td>
+                                    <td><%=parents[i].valueString%></td> 
+                                    </tr>
+                                <% } %>
+                             
+                        </tbody>
+                    </table>
             
-                            </td>
-                        </tr>
+                    <h4> Children </h4>
+                    <table class="table table-hovered">
             
-                    </tbody>
-                </table>
-            </div>
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Code</th>
+                                <th scope="col">String</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            
+                        
+                                <% for (var i =0; i < children.length; i++){ %>
+                                    <tr>
+                                    <td><%=children[i].code%></td>
+                                    <td><%=children[i].valueString%></td> 
+                                </tr>
+                               <% } %>
+                            
+                
+                        </tbody>
+                    </table>
+                </div>
+                <% } %> 
     </body>
 
     </html>
