@@ -15,19 +15,38 @@ async function GetClinicalInfoOptimized(patientId){
         Immunization : [],
         MedicationRequest : []
     }
-    try { 
-        var response = await axios.get(fullUrl);
-        var responseData = response.data;
-        if (responseData.total > 0) { 
-            entries = responseData.entry;
-            entries.forEach(entry => {
-                var resourceType = entry.resource.resourceType;
-                if (patientData.hasOwnProperty(resourceType)) { 
-                    patientData[resourceType].push(entry.resource);
-                }
-            })
+    
 
+    try {
+        // handling paging
+        while(fullUrl){ 
+            var response = await axios.get(fullUrl);
+            var responseData = response.data;
+            fullUrl = null; 
+            var link = responseData.link;
+            if (link){ 
+                var nextUrl = link.find(page => { 
+                    return page.relation === 'next'
+                })
+                if (nextUrl){
+                    fullUrl = nextUrl.url;
+                }
+            }
+
+            if (responseData.total > 0) { 
+                entries = responseData.entry;
+                entries.forEach(entry => {
+                    var resourceType = entry.resource.resourceType;
+                    if (patientData.hasOwnProperty(resourceType)) {
+                        //deduping
+                        if (!patientData[resourceType].includes(entry.resource)){
+                            patientData[resourceType].push(entry.resource);
+                        } 
+                    }
+                })
+            }
         }
+        //console.log(patientData);
         return patientData;
     }
     catch (error){ 

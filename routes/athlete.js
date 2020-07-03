@@ -233,7 +233,8 @@ module.exports = {
             var FullURL = urlFHIREndpoint + "/" + ResourceClass + "/" + OperationName;
 
             // validating...
-            
+
+            /*
             var response = await axios.post(
                 FullURL, l, {
                     headers: {
@@ -244,7 +245,7 @@ module.exports = {
             )
             var data = response.data;
             console.log(data);
-            
+            */
             // posting data .... 
             data = await fhirClient.create({
                 resourceType : 'Immunization',

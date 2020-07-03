@@ -96,7 +96,7 @@ module.exports = {
 
                     // this one liner optimizes patient record pull with the $everything extended operation
                     var patientData = await fhirAthlete.GetClinicalInfoOptimized(ServerAssignedId);
-
+                   
                     // uncomment the block below to run the unoptimized version
                     /*
                     var condition = await fhirAthlete.GetClinicalInfo('Condition', ServerAssignedId);
@@ -107,12 +107,13 @@ module.exports = {
                     var medicationList = await fhirAthlete.GetClinicalInfo('MedicationRequest', ServerAssignedId);
                     */
                     // lookup organization in patient's city
-
+                    
                     var allergy = patientData.AllergyIntolerance;
                     var condition = patientData.Condition;
                     var immunizationList = patientData.Immunization;
                     var medicationList = patientData.MedicationRequest;
-
+                
+                
                     var organizationList = await fhirAthlete.GetProviderInfo('Organization', patientCity);
                     var practitionerList = await fhirAthlete.GetProviderInfo('Practitioner', patientCity);
                     // console.log(practitionerList)
