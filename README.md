@@ -23,3 +23,4 @@ npm install
 ```bash
 node index.js
 ```
+The app should now be live on http://localhost:5000.
