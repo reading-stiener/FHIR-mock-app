@@ -1,4 +1,4 @@
-# FHIR Clients Assignment
+# FHIR mock app
 
 This repository is an example of mock app that uses the a test FHIR server and the `fhir-kit-client`
 library as the FHIR client. Follow the instructions below to run the app on your machine. The application
