@@ -21,6 +21,6 @@ npm install
 - Execute the following on terminal to FHIR up the app!
 
 ```bash
-node index.js
+node app.js
 ```
 The app should now be live on http://localhost:5000.
