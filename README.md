@@ -24,3 +24,7 @@ npm install
 node app.js
 ```
 The app should now be live on http://localhost:5000.
+
+## Credits
+
+This web application was based on a FHIR course offered by Health Level 7
