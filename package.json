@@ -17,6 +17,6 @@
     "express-fileupload": "^1.1.9",
     "fhir-kit-client": "^1.4.2",
     "req-flash": "0.0.3",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^4.2.0"
   }
 }
